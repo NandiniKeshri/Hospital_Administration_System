@@ -3,7 +3,9 @@ package com.hospital.config;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.beans.factory.annotation.Value;
 import java.util.List;
+import java.util.stream.Stream;
 import com.hospital.security.CustomUserDetailsService;
 import com.hospital.security.JwtAuthenticationFilter;
 import com.hospital.security.RestAccessDeniedHandler;
@@ -28,6 +30,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
+    @Value("${app.frontend-url:http://localhost:5173}")
+    private String frontendUrls;
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomUserDetailsService userDetailsService;
@@ -93,7 +98,14 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        List<String> allowedOrigins = Stream.concat(
+                        Stream.of("http://localhost:5173"),
+                        Stream.of(frontendUrls.split(",")))
+                .map(String::trim)
+                .filter(origin -> !origin.isEmpty())
+                .distinct()
+                .toList();
+        configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(List.of(
                 "GET",
                 "POST",
