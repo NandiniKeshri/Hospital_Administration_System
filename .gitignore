@@ -1,0 +1,31 @@
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Java and Maven
+**/target/
+*.class
+
+# React and Node
+**/node_modules/
+**/dist/
+**/build/
+
+# Logs
+*.log
+latest-error.txt
+backend-error.txt
+
+# IDE files
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+backend/startup-error.txt

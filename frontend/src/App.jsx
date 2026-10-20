@@ -1,0 +1,28 @@
+
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/patients" element={<Dashboard />} />
+        <Route path="/doctors" element={<Dashboard />} />
+        <Route path="/appointments" element={<Dashboard />} />
+        <Route path="/departments" element={<Dashboard />} />
+        <Route path="/pharmacy" element={<Dashboard />} />
+        <Route path="/billing" element={<Dashboard />} />
+        <Route path="/settings" element={<Dashboard />} />
+
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
